@@ -23,7 +23,7 @@ public:
     char getRowChar()const;
     int getColumn()const;
     void setShip(bool ship);
-    void setHit(bool ship);
+    void setHit(bool hit);
     bool getShip()const;
     bool getHit()const;
     string toString()const;

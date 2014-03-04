@@ -46,7 +46,7 @@ void Coordinate::setShip(bool ship)
 	this->ship = ship;
 }
 
-void Coordinate::setHit(bool ship)
+void Coordinate::setHit(bool hit)
 {
 	this->hit = hit;
 }
