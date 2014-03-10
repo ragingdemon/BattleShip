@@ -53,12 +53,32 @@ Board::~Board(){
     delete[] matrix;
 }
 
+Board::Board(const Board &b) : size(b.size)
+{
+    matrix = new Coordinate**[size];
+    for (int i = 0; i < size; ++i)
+    {
+        matrix[i] = new Coordinate*[size];
+    }
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            matrix[i][j] = new Coordinate(*b.matrix[i][j]);
+        }
+    }
+}
+
 Coordinate* Board::getCoordinate(const Coordinate &c) const
 {
     if (c.getRow() >= size || c.getColumn() >= size) {
         throw CoorditeExceptio();
     }
     return matrix[c.getRow()][c.getColumn()];
+}
+
+bool Board::setDestroyer(const Coordinate &c, char orientation)
+{
+    orientation = toupper(orientation);
+
 }
 
 string Board::toString() const

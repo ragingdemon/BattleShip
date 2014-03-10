@@ -21,9 +21,23 @@ Coordinate::Coordinate(string str)
     column--;
     ship = false;
     hit = false;
-    if ((getRow() < 0 || getRow() > 25) || (column < 0 || column > 25)) {
+    if ((getRow() < 0 || getRow() > 10) || (column < 0 || column > 10)) {
         throw CoorditeExceptio();
     }
+}
+
+Coordinate::Coordinate(const Coordinate &c) :
+row(c.row),column(c.column),ship(c.ship),hit(c.hit)
+{
+}
+
+bool Coordinate::evaluate(const Coordinate & c)
+{
+    if (*this == c && !hit) {
+        hit = true;
+        return true;
+    }
+    return false;
 }
 
 int Coordinate::getRow() const

@@ -18,7 +18,8 @@ class Coordinate
     bool hit;
 public:
     Coordinate(string coordinate);
-    bool evaluate()const;
+    Coordinate(const Coordinate & c);
+    bool evaluate(const Coordinate & c);
     int getRow()const;
     char getRowChar()const;
     int getColumn()const;

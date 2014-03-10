@@ -5,9 +5,13 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     board.cpp \
-    coordinate.cpp
+    coordinate.cpp \
+    ship.cpp \
+    destroyer.cpp
 
 HEADERS += \
     board.h \
-    coordinate.h
+    coordinate.h \
+    ship.h \
+    destroyer.h
 

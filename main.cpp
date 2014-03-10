@@ -5,7 +5,11 @@
 #include <vector>
 using namespace std;
 
-int main()
+void copia(Board b){
+    cout<<b.toString()<<endl;
+}
+
+int main(int argc,char* argv[])
 {
     vector<Coordinate> v;
     try {
@@ -26,6 +30,7 @@ int main()
     }
     Board board1;
     cout<<board1.toString()<<endl;
+    copia(board1);
     cout<<(board1.getCoordinate(Coordinate("B,5"))->toString())<<endl;
     return 0;
 }
