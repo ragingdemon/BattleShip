@@ -7,11 +7,17 @@ SOURCES += main.cpp \
     board.cpp \
     coordinate.cpp \
     ship.cpp \
-    destroyer.cpp
+    destroyer.cpp \
+    cruiser.cpp \
+    battleship.cpp \
+    carrier.cpp
 
 HEADERS += \
     board.h \
     coordinate.h \
     ship.h \
-    destroyer.h
+    destroyer.h \
+    cruiser.h \
+    battleship.h \
+    carrier.h
 

@@ -1,6 +1,7 @@
 #include "ship.h"
 #include "coordinate.h"
 #include <typeinfo>
+#include <sstream>
 
 Ship::Ship(unsigned int size) :
     sunk(false),size(size)
@@ -51,20 +52,31 @@ void Ship::setShip(unsigned int index, Coordinate *value)
     }
 }
 
-bool Ship::evaluateShot(const Coordinate &c)
+std::string Ship::evaluateShot(const Coordinate &c)
 {
-    for (unsigned int i = 0; i < size; ++i) {
-        if (ship[i]->evaluate(c) && !sunk) {
-            shipStatus();
-            return true;
+    if (!sunk) {
+        for (unsigned int i = 0; i < size; ++i) {
+            if (*ship[i] == c) {
+                shipStatus();
+                if (sunk) {
+                    return "SUNK";
+                }else {
+                    return "HIT";
+                }
+            }
         }
     }
-    return false;
+    return "MISS";
 }
 
-std::string Ship::getType()
+std::string Ship::toString() const
 {
-    return typeid(*this).name();
+    std::stringstream ss;
+    ss<<getType()<<": ";
+    for (unsigned int i = 0; i < size; ++i) {
+        ss<<ship[i]->toString()<<',';
+    }
+    return ss.str();
 }
 
 bool Ship::shipStatus()

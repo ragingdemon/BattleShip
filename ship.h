@@ -17,6 +17,7 @@ public:
     int getSize() const;
     bool getSunk() const;
     void setSunk(bool value);
-    bool evaluateShot(const Coordinate &c);
-    virtual std::string getType();
+    std::string evaluateShot(const Coordinate &c);
+    virtual std::string getType() const=0;
+    virtual std::string toString()const;
 };

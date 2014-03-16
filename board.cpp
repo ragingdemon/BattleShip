@@ -1,5 +1,7 @@
 #include "board.h"
 #include "coordinate.h"
+#include "destroyer.h"
+#include "cruiser.h"
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -9,6 +11,9 @@ using std::stringstream;
 using std::cout;
 using std::endl;
 using std::setw;
+
+//template <class T>
+//bool setShip(const Coordinate &c, char orientation);
 
 Board::Board(int size)
 {
@@ -44,13 +49,17 @@ Board::~Board(){
             if (matrix[i][j])
             {
                 delete matrix[i][j];
-            }            
+            }
         }
     }
     for (int i = 0; i < size; ++i) {
         delete matrix[i];
     }
     delete[] matrix;
+
+    for (unsigned int i = 0; i < ships.size(); ++i) {
+        delete ships[i];
+    }
 }
 
 Board::Board(const Board &b) : size(b.size)
@@ -75,10 +84,48 @@ Coordinate* Board::getCoordinate(const Coordinate &c) const
     return matrix[c.getRow()][c.getColumn()];
 }
 
-bool Board::setDestroyer(const Coordinate &c, char orientation)
+string Board::evaluateShot(const Coordinate &c)
 {
-    orientation = toupper(orientation);
+    string message;
+    stringstream ss;
+    if (matrix[c.getRow()][c.getColumn()]->shoot()) {
+        for (unsigned int i = 0; i < ships.size(); ++i) {
+            Ship *ship = ships[i];
+            message = ship->evaluateShot(c);
+            if (message == "HIT") {
+                ss<<message<<':'<<ship->getType();
+                return ss.str();
+            }else if (message == "SUNK") {
+                ss<<message<<':'<<ship->getType();
+                return ss.str();
+            }
+        }
+    }
+    return "MISS";
+}
 
+std::string Board::status() const
+{
+    unsigned int sunkShips = 0;
+    for (unsigned int i = 0; i < ships.size(); ++i) {
+        Ship *ship = ships[i];
+        if (ship->getSunk()) {
+            sunkShips++;
+        }
+    }
+    if (sunkShips == ships.size()) {
+        return "LOST";
+    }
+    return "OK";
+}
+
+string Board::printShips() const
+{
+    stringstream ss;
+    for (unsigned int i = 0; i < ships.size(); ++i) {
+        ss<<ships[i]->toString()<<endl;
+    }
+    return ss.str();
 }
 
 string Board::toString() const
@@ -93,8 +140,14 @@ string Board::toString() const
     for (int i = 0; i < size; ++i) {
         ss<<(char)(letters + i);
         for (int j = 0; j < size; ++j) {
-            if (!matrix[i][j]->getHit() && !matrix[i][j]->getHit()) {
+            if (!matrix[i][j]->getHit() && !matrix[i][j]->getShip()) {
                 ss<<setw(4)<<'-';
+            }else if (matrix[i][j]->getHit() && !matrix[i][j]->getShip()) {
+                ss<<setw(4)<<'M';
+            }else if (!matrix[i][j]->getHit() && matrix[i][j]->getShip()) {
+                ss<<setw(4)<<'S';
+            }else if (matrix[i][j]->getHit() && matrix[i][j]->getShip()) {
+                ss<<setw(4)<<'X';
             }
         }
         ss<<endl;

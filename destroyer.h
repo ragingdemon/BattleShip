@@ -1,12 +1,11 @@
-#ifndef DESTROYER_H
-#define DESTROYER_H
+#pragma once
 #include "ship.h"
+#include <string>
 class Destroyer : public Ship
 {
 public:
     Destroyer();
     Destroyer(const Destroyer & d);
     virtual ~Destroyer();
+    virtual std::string getType() const;
 };
-
-#endif // DESTROYER_H

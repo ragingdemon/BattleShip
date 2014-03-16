@@ -19,7 +19,7 @@ class Coordinate
 public:
     Coordinate(string coordinate);
     Coordinate(const Coordinate & c);
-    bool evaluate(const Coordinate & c);
+    bool shoot();
     int getRow()const;
     char getRowChar()const;
     int getColumn()const;

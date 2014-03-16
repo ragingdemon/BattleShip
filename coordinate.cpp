@@ -31,9 +31,9 @@ row(c.row),column(c.column),ship(c.ship),hit(c.hit)
 {
 }
 
-bool Coordinate::evaluate(const Coordinate & c)
+bool Coordinate::shoot()
 {
-    if (*this == c && !hit) {
+    if (!hit) {
         hit = true;
         return true;
     }
@@ -78,7 +78,7 @@ bool Coordinate::getHit()const
 string Coordinate::toString() const
 {
     stringstream ss;
-    ss<<'('<<row<<','<<column + 1<<')';
+    ss<<'('<<row<<','<<column + 1<<')'<<": ";
     ss<<"Row = "<<getRow()<<", Column = "<<getColumn();
     return ss.str();
 }
